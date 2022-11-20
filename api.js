@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUser, Comment,putComment } = require('./db/db.js');
+const { Comment } = require('./db/db.js');
 const app = express();
 
 app.use(function (req, res, next) {
@@ -23,6 +23,7 @@ app.listen(9000, () => {
 
 app.get('/comments/:name', async (req, res) => {
   try {
+    console.log(req)
     const result = await Comment.findOne({ name: req.params.name });
     console.log(result);
     res.status(200).send(result);
@@ -41,16 +42,19 @@ app.get('/comments/all', async (req, res) => {
   }
 });
 
-app.post('/save',async (req,res) => {
-    await Comment.updateOne(
-        { name: req.body.name },
-        { comments: req.body.comments }
-      ).then((r) => {
-        res.status(200).send(r);
-      }).catch((err) => {
-        res.status(404).send({ message: err.message });
-      });
-})
+app.post('/save', async (req, res) => {
+    console.log(req.body);
+  await Comment.updateOne(
+    { name: req.body.name },
+    { comments: req.body.comments }
+  )
+    .then((r) => {
+      res.status(200).send(r);
+    })
+    .catch((err) => {
+      res.status(404).send({ message: err.message });
+    });
+});
 
 app.get('/', (req, res) => {
   res.send('vay amk');
