@@ -17,13 +17,13 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.json());
-app.listen(9000, () => {
-  console.log('listening on ' + 9000);
+app.listen(process.env.PORT || 8083, () => {
+  console.log('listening on ' + (process.env.PORT ? process.env.PORT : 8083));
 });
 
 app.get('/comments/:name', async (req, res) => {
   try {
-    console.log(req)
+    console.log(req);
     const result = await Comment.findOne({ name: req.params.name });
     console.log(result);
     res.status(200).send(result);
@@ -43,7 +43,7 @@ app.get('/comments/all', async (req, res) => {
 });
 
 app.post('/save', async (req, res) => {
-    console.log(req.body);
+  console.log(req.body);
   await Comment.updateOne(
     { name: req.body.name },
     { comments: req.body.comments }
