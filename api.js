@@ -57,5 +57,9 @@ app.post('/save', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('vay amk');
+  res.send(`
+  <div style="text-align: center">
+  <h1>SSA Architecture</h1>
+  </div>
+  `);
 });
